@@ -1,0 +1,12 @@
+name: kapt-energy-analysis
+
+services:
+  python:
+    build: .
+    container_name: kapt-energy-analysis-python
+    tty: true
+    volumes:
+      - .:/root/kapt-energy-analysis
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
