@@ -1,0 +1,3 @@
+﻿month,energy_type,energy_name,correlation,slope,initial_value,annual_growth_rate,trend,data_points
+04,hwaterCool,수도 사용량,1.0,275.0,2375.0,11.58,증가,2
+05,hwaterCool,수도 사용량,-1.0,-342.0,2829.0,-12.09,감소,2

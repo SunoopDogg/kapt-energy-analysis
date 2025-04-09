@@ -1,10 +1,14 @@
 {
     "cSpell.words": [
         "dotenv",
+        "hgas",
+        "hheat",
+        "hwater",
         "iloc",
         "isin",
         "iterrows",
         "kapt",
+        "polyfit",
         "skiprows"
     ]
 }
