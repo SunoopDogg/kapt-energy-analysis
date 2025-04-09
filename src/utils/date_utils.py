@@ -13,6 +13,9 @@ def calculate_req_date(approval_date):
     Returns:
         tuple: (시작일(YYYYMM), 종료일(YYYYMM)) 또는 오류 발생 시 None
     """
+    if not approval_date or len(str(approval_date)) != 8:
+        return None
+
     current_date = datetime.now()
 
     # 이전 달 계산
@@ -28,7 +31,7 @@ def calculate_req_date(approval_date):
 
     try:
         # 사용승인일 문자열을 날짜 객체로 변환
-        approval_date = datetime.strptime(approval_date, '%Y%m%d')
+        approval_date = datetime.strptime(str(approval_date), '%Y%m%d')
 
         # 시작일은 사용승인월
         start_date = f"{approval_date.year}{approval_date.month:02d}"
@@ -50,8 +53,16 @@ def get_monthly_dates(start_date, end_date):
     Returns:
         list: YYYYMM 형식의 월 목록
     """
-    start = datetime.strptime(start_date, '%Y%m')
-    end = datetime.strptime(end_date, '%Y%m')
+    try:
+        start = datetime.strptime(start_date, '%Y%m')
+        end = datetime.strptime(end_date, '%Y%m')
+    except ValueError:
+        print("날짜 형식 오류: YYYYMM 형식이어야 합니다")
+        return []
+
+    if start > end:
+        print("시작일이 종료일보다 늦을 수 없습니다")
+        return []
 
     result = []
     current = start
