@@ -1,0 +1,5 @@
+﻿month,energy_type,energy_name,correlation,slope,initial_value,annual_growth_rate,trend,data_points
+11,elect,전기 사용량,-1.0,-2.5,5397890.0,-0.0,감소,2
+11,helect,전기 사용량,-1.0,-5428.75,63149.0,-8.6,감소,2
+11,waterCool,수도 사용량,,-0.0,4644780.0,-0.0,유지,2
+11,hwaterCool,수도 사용량,,-0.0,4272.0,-0.0,유지,2
