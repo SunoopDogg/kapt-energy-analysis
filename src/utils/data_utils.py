@@ -88,8 +88,8 @@ def decoding_file_name(file_name: str) -> tuple:
     Returns:
         tuple: (단지 코드, 단지명)
     """
-    # 일반적인 양식: "A숫자_단지명_날짜1_날짜2.csv"
-    pattern = r"([A-Z]\d+)_(.+?)_\d+_\d+\.csv"
+    # 일반적인 양식: "A숫자_단지명_{상관없음}.csv"
+    pattern = r"([A-Z]\d+)_(.+?)(_\w+)?\.csv$"
     match = re.match(pattern, file_name)
 
     if match:
