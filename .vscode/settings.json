@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "dotenv",
+        "figsize",
+        "fontsize",
         "helect",
         "hgas",
         "hheat",
@@ -9,7 +11,10 @@
         "isin",
         "iterrows",
         "kapt",
+        "linestyle",
         "polyfit",
-        "skiprows"
+        "skiprows",
+        "xlabel",
+        "ylabel"
     ]
 }
