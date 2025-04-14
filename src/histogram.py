@@ -60,6 +60,12 @@ def merge_filtered_energy_data(analysis_files: list, output_folder: str):
         print(
             f"총 {len(all_data)} 행, data_points가 5 이상인 데이터만 병합했습니다.")
 
+        if not all_data.empty:
+            output_path = os.path.join(
+                output_folder, 'merged_filtered_energy_data.csv')
+            all_data.to_csv(output_path, index=False)
+            print(f"병합된 데이터 저장 완료: {output_path}")
+
         return all_data
 
     except Exception as e:
@@ -106,7 +112,7 @@ def display_grouped_data_info(grouped_data):
             print(f"  월: {month}, 데이터 수: {len(df)}")
 
 
-def visualize_correlation_by_energy_and_month(grouped_data, output_folder):
+def visualize_correlation_by_energy_and_month(grouped_data: dict, output_folder):
     """
     energy_type과 month별로 correlation 분포를 시각화합니다.
 
@@ -129,10 +135,10 @@ def visualize_correlation_by_energy_and_month(grouped_data, output_folder):
             month_labels.append(str(month))
 
         # 박스플롯 생성
-        plt.boxplot(all_months_data, labels=month_labels)
-        plt.title(f'{energy_type} - 월별 상관관계(correlation) 분포', fontsize=16)
-        plt.xlabel('월', fontsize=14)
-        plt.ylabel('상관관계(Correlation)', fontsize=14)
+        plt.boxplot(all_months_data, tick_labels=month_labels)
+        plt.title(f'{energy_type} - Correlation', fontsize=16)
+        plt.xlabel('month', fontsize=14)
+        plt.ylabel('correlation', fontsize=14)
         plt.grid(axis='y', linestyle='--', alpha=0.7)
 
         # 저장 및 닫기
@@ -140,7 +146,7 @@ def visualize_correlation_by_energy_and_month(grouped_data, output_folder):
             output_folder, f'{energy_type}_correlation_boxplot.png')
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
-        print(f"  - {energy_type} 박스플롯 저장 완료: {output_path}")
+        print(f"  - {energy_type} 박스플롯 저장 완료")
 
     # 2. 히트맵: 에너지 타입과 월별 correlation 중앙값
     # 데이터 준비
@@ -158,17 +164,17 @@ def visualize_correlation_by_energy_and_month(grouped_data, output_folder):
     if not heatmap_data.empty:
         plt.figure(figsize=(12, 10))
         sns.heatmap(heatmap_data.T, annot=True, cmap='coolwarm', center=0,
-                    cbar_kws={'label': '상관관계(Correlation) 중앙값'})
-        plt.title('에너지 타입과 월별 상관관계 중앙값', fontsize=16)
-        plt.xlabel('월', fontsize=14)
-        plt.ylabel('에너지 타입', fontsize=14)
+                    cbar_kws={'label': 'Correlation median'})
+        plt.title('Correlation median', fontsize=16)
+        plt.xlabel('month', fontsize=14)
+        plt.ylabel('type', fontsize=14)
 
         # 저장 및 닫기
         output_path = os.path.join(
             output_folder, 'energy_month_correlation_heatmap.png')
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
-        print(f"  - 히트맵 저장 완료: {output_path}")
+        print(f"  - 히트맵 저장 완료")
 
     # 3. 바플롯: 각 에너지 타입별 평균 상관관계
     plt.figure(figsize=(14, 8))
@@ -187,9 +193,9 @@ def visualize_correlation_by_energy_and_month(grouped_data, output_folder):
     # 바플롯 그리기
     plt.bar(energy_avg_corr.keys(), energy_avg_corr.values(), color=colors)
     plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
-    plt.title('에너지 타입별 평균 상관관계', fontsize=16)
-    plt.xlabel('에너지 타입', fontsize=14)
-    plt.ylabel('평균 상관관계(Correlation)', fontsize=14)
+    plt.title('Correlation average', fontsize=16)
+    plt.xlabel('type', fontsize=14)
+    plt.ylabel('correlation', fontsize=14)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
 
     # 값 표시
@@ -202,7 +208,7 @@ def visualize_correlation_by_energy_and_month(grouped_data, output_folder):
         output_folder, 'energy_type_avg_correlation.png')
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
-    print(f"  - 에너지 타입별 평균 상관관계 바플롯 저장 완료: {output_path}")
+    print(f"  - 에너지 타입별 평균 상관관계 바플롯 저장 완료")
 
     print("상관관계 시각화 완료!")
 
@@ -217,9 +223,12 @@ def main():
     visualization_folder = os.path.join(os.getcwd(), 'data', 'visualization')
     os.makedirs(visualization_folder, exist_ok=True)
 
+    merged_folder = os.path.join(
+        os.getcwd(), 'data', 'processed')
+    os.makedirs(merged_folder, exist_ok=True)
+
     # 데이터 포인트가 5개 이상인 분석 결과만 병합
-    merged_data = merge_filtered_energy_data(
-        analysis_files, visualization_folder)
+    merged_data = merge_filtered_energy_data(analysis_files, merged_folder)
 
     if not merged_data.empty:
         print("데이터 병합 완료!")
@@ -230,7 +239,7 @@ def main():
         grouped_data = group_data_by_energy_type_and_month(merged_data)
 
         # 그룹화된 데이터 정보 출력
-        # display_grouped_data_info(grouped_data)
+        display_grouped_data_info(grouped_data)
 
         # correlation 시각화
         visualize_correlation_by_energy_and_month(
