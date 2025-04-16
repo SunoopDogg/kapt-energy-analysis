@@ -53,7 +53,7 @@ def analyze_monthly_trend(month_data: pd.DataFrame, column: str) -> Optional[Dic
         return None
 
     # 상관계수 계산
-    correlation = valid_data.corr().iloc[0, 1]
+    correlation = valid_data.corr(method='pearson').iloc[0, 1]
 
     # 선형 회귀 계수 계산
     x = valid_data['year'].values
