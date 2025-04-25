@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
+        "arctan",
+        "aspectmode",
         "dotenv",
         "figsize",
         "fontsize",
@@ -11,10 +13,14 @@
         "isin",
         "iterrows",
         "kapt",
+        "linalg",
         "linestyle",
         "polyfit",
         "skiprows",
+        "xaxis",
         "xlabel",
-        "ylabel"
+        "yaxis",
+        "ylabel",
+        "zaxis"
     ]
 }
