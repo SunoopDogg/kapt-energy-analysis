@@ -1,0 +1,4 @@
+﻿requestMonth,kaptCode,heat,hheat,waterHot,hwaterHot,gas,hgas,elect,helect,waterCool,hwaterCool
+201003,A15776001,0,0,0,0,0,0,0,0,0,0
+201004,A15776001,0,0,0,0,0,0,1038510,0,0,0
+201005,A15776001,0,0,0,0,0,0,7023140,0,1245840,0
